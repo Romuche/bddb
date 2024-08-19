@@ -1,0 +1,29 @@
+.bddb-button {
+    width: 36px;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    z-index: 2;
+    background-color: #106bd5;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.13);
+    transition: scale 0.15s ease-in-out;
+
+    &:hover {
+        scale: 1.075;
+    }
+
+    svg {
+        width: 60%;
+    }
+}
+
+.photo-button {
+    bottom: 42px;
+    right: 20px;
+}
+
+.chat-button {
+    top: 20px;
+    right: 130px;
+}

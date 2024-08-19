@@ -1,0 +1,26 @@
+html {
+    width: 650px;
+    min-height: 400px;
+    scrollbar-gutter: stable;
+}
+
+.profile:not(.is-active) {
+    display: none;
+}
+
+.photos {
+    overflow-x: scroll;
+}
+
+.photo {
+    aspect-ratio: 4/5;
+    flex: 0 0 33.333%;
+    background-size: cover;
+}
+
+.chat {
+    .author-me + .author-person,
+    .author-person + .author-me {
+        margin-top: 1rem;
+    }
+}

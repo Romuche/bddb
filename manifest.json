@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "BDDB",
+    "description": "Bobo Date Database",
+    "version": "1.0",
+    "action": {
+        "default_popup": "popup/index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://tinder.com/app/*"],
+            "js": [
+                "content/js/tools.js",
+                "content/js/model/Profile.js",
+                "content/js/interface.js",
+                "content/js/actions.js",
+                "content/main.js"
+            ],
+            "css": ["content/css/buttons.css"]
+        }
+    ],
+    "permissions": ["storage", "activeTab", "scripting"],
+    "icons": {
+        "128": "popup/img/icon.png"
+    }
+}
