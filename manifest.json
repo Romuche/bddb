@@ -10,10 +10,14 @@
         {
             "matches": ["https://tinder.com/app/*"],
             "js": [
-                "content/js/tools.js",
-                "content/js/model/Profile.js",
-                "content/js/interface.js",
-                "content/js/actions.js",
+                "class/model/Gallery.js",
+                "class/model/Photo.js",
+                "class/model/Chat.js",
+                "class/model/Message.js",
+                "class/model/Profile.js",
+                "class/ProfileRepository.js",
+                "class/Tab.js",
+                "class/Interface.js",
                 "content/main.js"
             ],
             "css": ["content/css/buttons.css"]
