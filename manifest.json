@@ -14,10 +14,13 @@
                 "class/model/Photo.js",
                 "class/model/Chat.js",
                 "class/model/Message.js",
+                "class/model/Notepad.js",
+                "class/model/Note.js",
                 "class/model/Profile.js",
                 "class/ProfileRepository.js",
                 "class/Tab.js",
-                "class/Interface.js",
+                "class/DOMObserver.js",
+                "class/DOMManipulator.js",
                 "content/main.js"
             ],
             "css": ["content/css/buttons.css"]

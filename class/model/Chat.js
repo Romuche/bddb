@@ -39,7 +39,7 @@ class Chat {
     draw(profileContainer) {
         // Build container
         const chatContainer = document.createElement("div");
-        chatContainer.classList.add("chat", "mt-3");
+        chatContainer.classList.add("chat", "mt-3", "is-pulled-left");
 
         for (const message of this.messages) {
             message.draw(chatContainer);

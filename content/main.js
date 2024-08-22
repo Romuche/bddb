@@ -1,2 +1,3 @@
-// Start UI edit loop
-new Interface();
+// Start DOM observe loop
+const observer = new DOMObserver();
+observer.startLoop();

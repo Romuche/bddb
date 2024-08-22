@@ -31,7 +31,7 @@ class Gallery {
     draw(profileContainer) {
         // Build container
         const galleryContainer = document.createElement("div");
-        galleryContainer.classList.add("photos", "is-flex");
+        galleryContainer.classList.add("gallery", "is-flex");
 
         // Build photos
         for (const photo of this.photos) {

@@ -3,15 +3,18 @@ class Profile {
     name;
     chat;
     gallery;
+    notepad;
     #tab;
+    #repository;
 
-    constructor(data = null) {
+    constructor(data = null, repository) {
         if (data && data.id) {
             // Build from local storage
             this.id = data.id;
             this.name = data.name;
             this.chat = new Chat(data.chat);
             this.gallery = new Gallery(data.gallery);
+            this.notepad = new Notepad(data.notepad, this);
             this.#tab = new Tab(data);
         } else {
             // Build empty
@@ -19,16 +22,20 @@ class Profile {
             this.name = this.#parseName();
             this.chat = new Chat();
             this.gallery = new Gallery();
+            this.notepad = new Notepad([], this);
             this.#tab = new Tab();
         }
+
+        this.#repository = repository;
     }
 
-    async save(profileRepository) {
-        await profileRepository.addOrUpdate(this.id, {
+    async save() {
+        await this.#repository.addOrUpdate(this.id, {
             id: this.id,
             name: this.name,
             chat: this.chat.serialize(),
             gallery: this.gallery.serialize(),
+            notepad: this.notepad.serialize(),
         });
     }
 
@@ -44,6 +51,12 @@ class Profile {
         this.gallery.add(new Photo(activeImage));
     }
 
+    parseSelection() {
+        const selectedText = window.getSelection().toString();
+
+        this.notepad.add(new Note(selectedText, null));
+    }
+
     draw() {
         const container = document.querySelector("[data-profiles]");
 
@@ -56,6 +69,7 @@ class Profile {
         this.#buildDeleteButton(profileContainer);
         this.gallery.draw(profileContainer);
         this.chat.draw(profileContainer);
+        this.notepad.draw(profileContainer);
 
         // Make sure first child is selected
         container.querySelector("[data-profile-id]:first-child").classList.add("is-active");

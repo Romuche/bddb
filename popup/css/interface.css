@@ -1,5 +1,5 @@
 html {
-    width: 650px;
+    width: 700px;
     min-height: 400px;
     scrollbar-gutter: stable;
 }
@@ -8,7 +8,7 @@ html {
     display: none;
 }
 
-.photos {
+.gallery {
     overflow-x: scroll;
 }
 
@@ -19,8 +19,14 @@ html {
 }
 
 .chat {
+    width: 65%;
+
     .author-me + .author-person,
     .author-person + .author-me {
         margin-top: 1rem;
     }
+}
+
+.notepad {
+    width: 35%;
 }
