@@ -25,13 +25,13 @@ class Photo {
         };
     }
 
-    draw(galleryContainer) {
+    draw(photosContainer) {
         const photoElement = document.createElement("div");
 
         photoElement.style.backgroundImage = "url(" + this.src + ")";
         photoElement.classList.add("photo");
 
-        galleryContainer.append(photoElement);
+        photosContainer.append(photoElement);
     }
 
     #getElementBGImageUrl(element) {

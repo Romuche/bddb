@@ -1,5 +1,4 @@
 html {
-    width: 700px;
     min-height: 400px;
     scrollbar-gutter: stable;
 }
@@ -8,7 +7,7 @@ html {
     display: none;
 }
 
-.gallery {
+.photos {
     overflow-x: scroll;
 }
 
@@ -18,7 +17,7 @@ html {
     background-size: cover;
 }
 
-.chat {
+.messages {
     width: 65%;
 
     .author-me + .author-person,
@@ -27,6 +26,6 @@ html {
     }
 }
 
-.notepad {
+.notes {
     width: 35%;
 }

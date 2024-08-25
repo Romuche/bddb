@@ -1,4 +1,4 @@
-class Chat {
+class MessageCollection {
     messages = [];
 
     constructor(data = []) {
@@ -15,7 +15,7 @@ class Chat {
         }
     }
 
-    // Get text only transcript of chat
+    // Get text only transcript of messages
     transcript() {
         let transcript;
 
@@ -38,13 +38,13 @@ class Chat {
 
     draw(profileContainer) {
         // Build container
-        const chatContainer = document.createElement("div");
-        chatContainer.classList.add("chat", "mt-3", "is-pulled-left");
+        const messagesContainer = document.createElement("div");
+        messagesContainer.classList.add("messages", "mt-3", "is-pulled-left");
 
         for (const message of this.messages) {
-            message.draw(chatContainer);
+            message.draw(messagesContainer);
         }
 
-        profileContainer.append(chatContainer);
+        profileContainer.append(messagesContainer);
     }
 }

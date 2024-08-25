@@ -5,15 +5,15 @@ class DOMManipulator {
         }
     }
 
-    buildChatButton() {
-        if (!document.querySelector(".bddb-button.chat-button")) {
-            document.querySelector(".chat").appendChild(this.#buildButton("chat-button"));
+    buildMessageButton() {
+        if (!document.querySelector(".bddb-button.message-button")) {
+            document.querySelector(".chat").appendChild(this.#buildButton("message-button"));
         }
     }
 
-    buildNotepadButton() {
-        if (!document.querySelector(".bddb-button.notepad-button")) {
-            document.body.appendChild(this.#buildButton("notepad-button"));
+    buildNoteButton() {
+        if (!document.querySelector(".bddb-button.note-button")) {
+            document.body.appendChild(this.#buildButton("note-button"));
         }
     }
 

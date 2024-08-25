@@ -1,4 +1,4 @@
-class Gallery {
+class PhotoCollection {
     photos = [];
 
     constructor(data = []) {
@@ -30,14 +30,14 @@ class Gallery {
 
     draw(profileContainer) {
         // Build container
-        const galleryContainer = document.createElement("div");
-        galleryContainer.classList.add("gallery", "is-flex");
+        const photosContainer = document.createElement("div");
+        photosContainer.classList.add("photos", "is-flex");
 
         // Build photos
         for (const photo of this.photos) {
-            photo.draw(galleryContainer);
+            photo.draw(photosContainer);
         }
 
-        profileContainer.append(galleryContainer);
+        profileContainer.append(photosContainer);
     }
 }

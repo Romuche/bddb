@@ -14,7 +14,7 @@ class Message {
         }
     }
 
-    draw(chatContainer) {
+    draw(messagesContainer) {
         const messageWrapper = document.createElement("div");
         messageWrapper.classList.add("is-clearfix");
 
@@ -32,7 +32,7 @@ class Message {
         }
 
         messageWrapper.append(messageContainer);
-        chatContainer.append(messageWrapper);
+        messagesContainer.append(messageWrapper);
     }
 
     serialize() {

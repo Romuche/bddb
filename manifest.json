@@ -3,18 +3,15 @@
     "name": "BDDB",
     "description": "Bobo Date Database",
     "version": "1.0",
-    "action": {
-        "default_popup": "popup/index.html"
-    },
     "content_scripts": [
         {
             "matches": ["https://tinder.com/app/*"],
             "js": [
-                "class/model/Gallery.js",
+                "class/model/PhotoCollection.js",
                 "class/model/Photo.js",
-                "class/model/Chat.js",
+                "class/model/MessageCollection.js",
                 "class/model/Message.js",
-                "class/model/Notepad.js",
+                "class/model/NoteCollection.js",
                 "class/model/Note.js",
                 "class/model/Profile.js",
                 "class/ProfileRepository.js",
@@ -26,8 +23,16 @@
             "css": ["content/css/buttons.css"]
         }
     ],
-    "permissions": ["storage", "activeTab", "scripting"],
     "icons": {
-        "128": "popup/img/icon.png"
+        "128": "view/img/icon.png"
+    },
+    "permissions": ["storage", "activeTab", "scripting", "tabs"],
+    "action": {
+        "default_icon": {
+            "128": "view/img/icon.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
     }
 }

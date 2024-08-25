@@ -2,8 +2,8 @@ class DOMObserver {
     profile;
 
     constructor() {
-        // Build notepad button
-        new DOMManipulator().buildNotepadButton();
+        // Build note button
+        new DOMManipulator().buildNoteButton();
 
         // Attach click event
         document.addEventListener("click", (e) => this.#click(e));
@@ -23,20 +23,18 @@ class DOMObserver {
             }
 
             // Display chat buttons
-            if (this.#hasChat()) {
-                new DOMManipulator().buildChatButton();
+            if (this.#hasChatWindow()) {
+                new DOMManipulator().buildMessageButton();
             }
         }, 300);
     }
 
-    #loadProfile() {
+    async #loadProfile() {
         if (this.#isMatchedProfile()) {
-            (async () => {
-                const id = window.location.href.match(/\/messages\/([^/]+)/)[1];
-                const profileRepository = new ProfileRepository("bddb_");
+            const id = window.location.href.match(/\/messages\/([^/]+)/)[1];
+            const profileRepository = new ProfileRepository("bddb_");
 
-                this.profile = new Profile(await profileRepository.getById(id), profileRepository);
-            })();
+            this.profile = new Profile(await profileRepository.getById(id), profileRepository);
         }
     }
 
@@ -44,7 +42,7 @@ class DOMObserver {
         return /^https:\/\/tinder\.com\/app\/messages\/*/.test(window.location.href) ? true : false;
     }
 
-    #hasChat() {
+    #hasChatWindow() {
         // Check for chat container
         return document.querySelector(".App__body .chat") ? true : false;
     }
@@ -64,10 +62,10 @@ class DOMObserver {
         if (button.classList.contains("photo-button")) {
             // Button clicked is photo button
             this.profile.parsePhoto();
-        } else if (button.classList.contains("chat-button")) {
-            // Button clicked is chat button
-            this.profile.parseChat();
-        } else if (button.classList.contains("notepad-button")) {
+        } else if (button.classList.contains("message-button")) {
+            // Button clicked is messages button
+            this.profile.parseMessages();
+        } else if (button.classList.contains("note-button")) {
             // Button clicked is selection button
             this.profile.parseSelection();
         }
@@ -80,7 +78,7 @@ class DOMObserver {
             return;
         }
 
-        const button = document.querySelector(".bddb-button.notepad-button");
+        const button = document.querySelector(".bddb-button.note-button");
 
         if (window.getSelection().toString().length > 0) {
             const selection = window.getSelection().getRangeAt(0).getBoundingClientRect();

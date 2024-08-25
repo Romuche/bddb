@@ -1,9 +1,9 @@
 class Profile {
     id;
     name;
-    chat;
-    gallery;
-    notepad;
+    messages;
+    photos;
+    notes;
     #tab;
     #repository;
 
@@ -12,17 +12,17 @@ class Profile {
             // Build from local storage
             this.id = data.id;
             this.name = data.name;
-            this.chat = new Chat(data.chat);
-            this.gallery = new Gallery(data.gallery);
-            this.notepad = new Notepad(data.notepad, this);
+            this.messages = new MessageCollection(data.messages);
+            this.photos = new PhotoCollection(data.photos);
+            this.notes = new NoteCollection(data.notes, this);
             this.#tab = new Tab(data);
         } else {
             // Build empty
             this.id = window.location.href.match(/\/messages\/([^/]+)/)[1];
             this.name = this.#parseName();
-            this.chat = new Chat();
-            this.gallery = new Gallery();
-            this.notepad = new Notepad([], this);
+            this.messages = new MessageCollection();
+            this.photos = new PhotoCollection();
+            this.notes = new NoteCollection([], this);
             this.#tab = new Tab();
         }
 
@@ -33,56 +33,74 @@ class Profile {
         await this.#repository.addOrUpdate(this.id, {
             id: this.id,
             name: this.name,
-            chat: this.chat.serialize(),
-            gallery: this.gallery.serialize(),
-            notepad: this.notepad.serialize(),
+            messages: this.messages.serialize(),
+            photos: this.photos.serialize(),
+            notes: this.notes.serialize(),
         });
     }
 
-    parseChat() {
-        const chat = document.querySelector(".chat > div[id^='SC.chat']");
+    parseMessages() {
+        const messages = document.querySelector(".chat > div[id^='SC.chat']");
 
-        this.chat = new Chat(chat);
+        this.messages = new MessageCollection(messages);
     }
 
     parsePhoto() {
         const activeImage = document.querySelector('.keen-slider__slide[aria-hidden="false"] .profileCard__slider__img');
 
-        this.gallery.add(new Photo(activeImage));
+        this.photos.add(new Photo(activeImage));
     }
 
     parseSelection() {
         const selectedText = window.getSelection().toString();
 
-        this.notepad.add(new Note(selectedText, null));
+        this.notes.add(new Note(selectedText, null));
     }
 
     draw() {
         const container = document.querySelector("[data-profiles]");
+        let profileContainer = document.querySelector("[data-profile-id='" + this.id + "']");
 
-        const profileContainer = document.createElement("div");
-        profileContainer.classList.add("profile");
-        profileContainer.setAttribute("data-profile-id", this.id);
-        container.append(profileContainer);
+        if (profileContainer) {
+            // Update existing profile
+            profileContainer.innerHTML = "";
+        } else {
+            // Create profile
+            profileContainer = document.createElement("div");
+            profileContainer.classList.add("profile");
+            profileContainer.setAttribute("data-profile-id", this.id);
+            container.append(profileContainer);
 
-        // Sub builders
+            // Make sure first child is selected
+            container.querySelector("[data-profile-id]:first-child").classList.add("is-active");
+
+            // Also draw tab
+            this.#tab.draw();
+        }
+
+        // Build content
         this.#buildDeleteButton(profileContainer);
-        this.gallery.draw(profileContainer);
-        this.chat.draw(profileContainer);
-        this.notepad.draw(profileContainer);
-
-        // Make sure first child is selected
-        container.querySelector("[data-profile-id]:first-child").classList.add("is-active");
-
-        // Also draw tab
-        this.#tab.draw();
+        this.photos.draw(profileContainer);
+        this.messages.draw(profileContainer);
+        this.notes.draw(profileContainer);
     }
 
-    delete() {
-        (async () => {
-            await new ProfileRepository("bddb_").deleteById(this.id);
-            this.#tab.delete();
-        })();
+    async delete() {
+        await new ProfileRepository("bddb_").deleteById(this.id);
+        this.#tab.delete();
+    }
+
+    async refresh() {
+        const data = await this.#repository.getById(this.id);
+
+        this.id = data.id;
+        this.name = data.name;
+        this.messages = new MessageCollection(data.messages);
+        this.photos = new PhotoCollection(data.photos);
+        this.notes = new NoteCollection(data.notes, this);
+        this.#tab = new Tab(data);
+
+        this.draw();
     }
 
     // Try to extract name from a list of DOM elements
@@ -106,9 +124,11 @@ class Profile {
     }
 
     #buildDeleteButton(profileContainer) {
+        // Setup container
         const deleteWrapper = document.createElement("div");
         deleteWrapper.classList.add("is-clearfix", "pb-2");
 
+        // Build button
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("button", "is-danger", "is-outlined", "is-pulled-right");
         deleteButton.innerHTML = "❌";

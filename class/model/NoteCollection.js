@@ -1,4 +1,4 @@
-class Notepad {
+class NoteCollection {
     notes = [];
 
     constructor(data = [], profile) {
@@ -23,14 +23,14 @@ class Notepad {
 
     draw(profileContainer) {
         // Build container
-        const notepadContainer = document.createElement("div");
-        notepadContainer.classList.add("notepad", "mt-3", "pl-4", "is-pulled-right");
+        const notesContainer = document.createElement("div");
+        notesContainer.classList.add("notes", "mt-3", "pl-4", "is-pulled-right");
 
         // Build photos
         for (const note of this.notes) {
-            note.draw(notepadContainer);
+            note.draw(notesContainer);
         }
 
-        profileContainer.append(notepadContainer);
+        profileContainer.append(notesContainer);
     }
 }

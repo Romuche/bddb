@@ -13,7 +13,7 @@ class Note {
         }
     }
 
-    draw(notepadContainer) {
+    draw(notesContainer) {
         const noteWrapper = document.createElement("div");
         noteWrapper.classList.add("note", "message", "is-info", "is-small", "mb-4");
 
@@ -26,7 +26,7 @@ class Note {
         noteContainer.addEventListener("keydown", (e) => this.save(e));
 
         noteWrapper.append(noteContainer);
-        notepadContainer.append(noteWrapper);
+        notesContainer.append(noteWrapper);
     }
 
     serialize() {
