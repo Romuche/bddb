@@ -71,8 +71,10 @@ class Profile {
             profileContainer.setAttribute("data-profile-id", this.id);
             container.append(profileContainer);
 
-            // Make sure first child is selected
-            container.querySelector("[data-profile-id]:first-child").classList.add("is-active");
+            // Make sure first child is selected if there is no active tab
+            if (!container.querySelector("[data-profile-id].is-active")) {
+                container.querySelector("[data-profile-id]:first-child").classList.add("is-active");
+            }
 
             // Also draw tab
             this.#tab.draw();
