@@ -25,7 +25,6 @@ class Tab {
         tab.addEventListener("click", () => this.click());
 
         // Make sure first child is selected if there is no active tab
-        console.log(container.querySelector("[data-profile-id].is-active"));
         if (!container.querySelector("[data-tab-id].is-active")) {
             container.querySelector("[data-tab-id]:first-child").classList.add("is-active");
         }
