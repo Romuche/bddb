@@ -1,16 +1,29 @@
 class Message {
     author;
     content;
+    type;
 
     constructor(data = []) {
         if (data instanceof Element) {
             // Build from DOM element
             this.author = data.classList.contains("msg--received") ? "person" : "me";
-            this.content = data.querySelector(".text").textContent;
+
+            // Get message content
+            if (data.querySelector("img")) {
+                this.content = data.querySelector("img").getAttribute("src");
+                this.type = "img";
+            } else if (data.querySelector(".link")) {
+                this.content = data.querySelector("a").getAttribute("href");
+                this.type = "link";
+            } else {
+                this.content = data.querySelector(".text").textContent;
+                this.type = "txt";
+            }
         } else {
             // Build from serialized data
             this.author = data.author;
             this.content = data.content;
+            this.type = data.type;
         }
     }
 
@@ -19,8 +32,20 @@ class Message {
         messageWrapper.classList.add("is-clearfix");
 
         const messageContainer = document.createElement("div");
-        messageContainer.innerHTML = this.content;
         messageContainer.classList.add("message", "p-2", "mb-1");
+        console.log(this.type);
+
+        if (this.type == "img") {
+            const image = document.createElement("img");
+            image.setAttribute("src", this.content);
+            messageContainer.append(image);
+        } else if (this.type == "link") {
+            const link = document.createElement("a");
+            link.setAttribute("href", this.content);
+            messageContainer.append(link);
+        } else {
+            messageContainer.innerHTML = this.content;
+        }
 
         // Style messages depending on author
         if (this.author == "me") {
@@ -39,6 +64,7 @@ class Message {
         return {
             author: this.author,
             content: this.content,
+            type: this.type,
         };
     }
 }
