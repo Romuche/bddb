@@ -33,7 +33,6 @@ class Message {
 
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message", "p-2", "mb-1");
-        console.log(this.type);
 
         if (this.type == "img") {
             const image = document.createElement("img");
